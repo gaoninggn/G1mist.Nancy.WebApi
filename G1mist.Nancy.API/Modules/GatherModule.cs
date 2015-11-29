@@ -6,7 +6,7 @@ using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Validation;
 
-namespace G1mist.Nancy.API
+namespace G1mist.Nancy.API.Modules
 {
     public class GatherModule : NancyModule
     {

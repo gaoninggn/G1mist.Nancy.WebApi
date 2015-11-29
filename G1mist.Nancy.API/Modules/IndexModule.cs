@@ -1,7 +1,7 @@
 ﻿using G1mist.Nancy.API.Model;
 using Nancy;
 
-namespace G1mist.Nancy.API
+namespace G1mist.Nancy.API.Modules
 {
     public class IndexModule : NancyModule
     {
@@ -14,8 +14,6 @@ namespace G1mist.Nancy.API
 
                 return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(responseModel);
             };
-
-
         }
     }
 }

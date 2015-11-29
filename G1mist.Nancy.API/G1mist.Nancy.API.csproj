@@ -95,8 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="GatherModule.cs" />
-    <Compile Include="IndexModule.cs" />
+    <Compile Include="Modules\GatherModule.cs" />
+    <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Model\DTOs\Student.cs" />
     <Compile Include="Model\ErrorResponseMessage.cs" />
     <Compile Include="Model\ResponseMessage.cs" />
