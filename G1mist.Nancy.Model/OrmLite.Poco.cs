@@ -26,7 +26,7 @@
 // 
 //     Connection String Name: `ConStr`
 //     Provider:               `MySql.Data.MySqlClient`
-//     Connection String:      `server=rds56wk7qzmkec7j58lx1.mysql.rds.aliyuncs.com;database=r76vh4e95ql22lzi;uid=r76vh4e95ql22lzi;pwd=gaoning5239319;`
+//     Connection String:      `server=5656b3001154f.sh.cdb.myqcloud.com;port=8237;database=db_light;uid=root;pwd=1qaz!QAZ;`
 //     Schema:                 ``
 //     Include Views:          `False`
 
@@ -51,6 +51,47 @@ using ServiceStack.Model;
 
 namespace G1mist.Nancy.Model
 {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

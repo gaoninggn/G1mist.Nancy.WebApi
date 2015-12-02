@@ -1,19 +1,165 @@
-﻿using G1mist.Nancy.API.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using G1mist.Nancy.API.Model;
+using G1mist.Nancy.API.Model.DTOs;
+using G1mist.Nancy.IRepository;
+using G1mist.Nancy.Model;
 using Nancy;
+using Newtonsoft.Json;
 
 namespace G1mist.Nancy.API.Modules
 {
     public class IndexModule : NancyModule
     {
-        public IndexModule()
+        public IndexModule(IBaseRepository<tb_gather> repository)
             : base("/api")
         {
-            Get["/"] = parameters =>
-            {
-                var responseModel = new ResponseMessage { ErrorCode = 0, Message = "Hello world" };
+            Get["/"] = _ => View["index.html"];
 
-                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(responseModel);
+            Get["/temperature"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(5).ToList();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(5).ToList();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
+
+                var listVol = new List<Voltage>
+                {
+                    new Voltage{name = "灯泡1",data = dataA},
+                    new Voltage{name = "灯泡2",data = dataB}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); ;
             };
+
+            Get["/gettemperature"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(1).ToList();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(1).ToList();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
+
+                var listVol = new List<Voltage>
+                {
+                    new Voltage{name = "灯泡1",data = dataA},
+                    new Voltage{name = "灯泡2",data = dataB}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol);
+            };
+
+            Get["/voltage"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(5).ToList();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(5).ToList();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.voltage }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.voltage }).ToList();
+
+                var listVol = new List<Voltage>
+                {
+                    new Voltage{name = "灯泡1",data = dataA},
+                    new Voltage{name = "灯泡2",data = dataB}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); ;
+            };
+
+            Get["/getvoltage"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(1).ToList();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(1).ToList();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.voltage }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.voltage }).ToList();
+
+                var listVol = new List<Voltage>
+                {
+                    new Voltage{name = "灯泡1",data = dataA},
+                    new Voltage{name = "灯泡2",data = dataB}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol);
+            };
+
+            Get["/electrical"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(5).ToList();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(5).ToList();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.electrical }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.electrical }).ToList();
+
+                var listVol = new List<Voltage>
+                {
+                    new Voltage{name = "灯泡1",data = dataA},
+                    new Voltage{name = "灯泡2",data = dataB}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); ;
+            };
+
+            Get["/getelectrical"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(1).ToList();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(1).ToList();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.electrical }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.electrical }).ToList();
+
+                var listVol = new List<Voltage>
+                {
+                    new Voltage{name = "灯泡1",data = dataA},
+                    new Voltage{name = "灯泡2",data = dataB}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol);
+            };
+
+            Get["/lumen"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(5).ToList();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(5).ToList();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
+
+                var listVol = new List<Voltage>
+                {
+                    new Voltage{name = "灯泡1",data = dataA},
+                    new Voltage{name = "灯泡2",data = dataB}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); ;
+            };
+
+            Get["/getlumen"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(1).ToList();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(1).ToList();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.lumen }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.lumen }).ToList();
+
+                var listVol = new List<Voltage>
+                {
+                    new Voltage{name = "灯泡1",data = dataA},
+                    new Voltage{name = "灯泡2",data = dataB}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol);
+            };
+        }
+
+        public long ConvertDateTimeInt(DateTime theDate)
+        {
+            var d1 = new DateTime(1970, 1, 1);
+            var d2 = theDate.ToUniversalTime();
+            var ts = new TimeSpan(d2.Ticks - d1.Ticks);
+            return (long)ts.TotalMilliseconds;
         }
     }
 }

@@ -87,23 +87,101 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-table.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datepicker.css" />
+    <Content Include="Content\datepicker3.css" />
+    <Content Include="Content\styles.css" />
+    <Content Include="Scripts\adapters\standalone-framework.js" />
+    <Content Include="Scripts\adapters\standalone-framework.src.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\chart-data.js" />
+    <Content Include="Scripts\chart.min.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\demo.js" />
+    <Content Include="Scripts\easypiechart-data.js" />
+    <Content Include="Scripts\easypiechart.js" />
+    <Content Include="Scripts\graphs.js" />
+    <Content Include="Scripts\highcharts-3d.js" />
+    <Content Include="Scripts\highcharts-3d.src.js" />
+    <Content Include="Scripts\highcharts-more.js" />
+    <Content Include="Scripts\highcharts-more.src.js" />
+    <Content Include="Scripts\highcharts.js" />
+    <Content Include="Scripts\highcharts.src.js" />
+    <Content Include="Scripts\html5shiv.min.js" />
+    <Content Include="Scripts\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\modules\boost.js" />
+    <Content Include="Scripts\modules\boost.src.js" />
+    <Content Include="Scripts\modules\broken-axis.js" />
+    <Content Include="Scripts\modules\broken-axis.src.js" />
+    <Content Include="Scripts\modules\canvas-tools.js" />
+    <Content Include="Scripts\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\modules\data.js" />
+    <Content Include="Scripts\modules\data.src.js" />
+    <Content Include="Scripts\modules\drilldown.js" />
+    <Content Include="Scripts\modules\drilldown.src.js" />
+    <Content Include="Scripts\modules\exporting.js" />
+    <Content Include="Scripts\modules\exporting.src.js" />
+    <Content Include="Scripts\modules\funnel.js" />
+    <Content Include="Scripts\modules\funnel.src.js" />
+    <Content Include="Scripts\modules\heatmap.js" />
+    <Content Include="Scripts\modules\heatmap.src.js" />
+    <Content Include="Scripts\modules\no-data-to-display.js" />
+    <Content Include="Scripts\modules\no-data-to-display.src.js" />
+    <Content Include="Scripts\modules\offline-exporting.js" />
+    <Content Include="Scripts\modules\offline-exporting.src.js" />
+    <Content Include="Scripts\modules\solid-gauge.js" />
+    <Content Include="Scripts\modules\solid-gauge.src.js" />
+    <Content Include="Scripts\modules\treemap.js" />
+    <Content Include="Scripts\modules\treemap.src.js" />
+    <Content Include="Scripts\qunee-min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\themes\dark-blue.js" />
+    <Content Include="Scripts\themes\dark-green.js" />
+    <Content Include="Scripts\themes\dark-unica.js" />
+    <Content Include="Scripts\themes\gray.js" />
+    <Content Include="Scripts\themes\grid-light.js" />
+    <Content Include="Scripts\themes\grid.js" />
+    <Content Include="Scripts\themes\sand-signika.js" />
+    <Content Include="Scripts\themes\skies.js" />
+    <Content Include="Views\Control.html" />
+    <Content Include="Views\Efficiency.html" />
+    <Content Include="Views\Electric.html" />
+    <Content Include="Views\index.html" />
+    <Content Include="Views\Lighting.html" />
+    <Content Include="Views\login.html" />
     <Content Include="Views\responsemessage.html" />
+    <Content Include="Views\Saving.html" />
+    <Content Include="Views\Temperature.html" />
+    <Content Include="Views\Temperature1.html" />
     <Content Include="Views\users.html" />
+    <Content Include="Views\Voltage.html" />
+    <Content Include="Views\warn.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Model\DTOs\data.cs" />
+    <Compile Include="Model\DTOs\Voltage.cs" />
     <Compile Include="Modules\GatherModule.cs" />
     <Compile Include="Modules\IndexModule.cs" />
-    <Compile Include="Model\DTOs\Student.cs" />
     <Compile Include="Model\ErrorResponseMessage.cs" />
     <Compile Include="Model\ResponseMessage.cs" />
+    <Compile Include="Modules\ShowModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\nanvy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

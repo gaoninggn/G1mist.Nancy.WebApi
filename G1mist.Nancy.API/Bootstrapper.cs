@@ -8,6 +8,7 @@ using G1mist.Nancy.Model;
 using G1mist.Nancy.Repository;
 using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.Extensions;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 
@@ -32,9 +33,12 @@ namespace G1mist.Nancy.API
 
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
+            pipelines.BeforeRequest += CheckRoot;
             pipelines.BeforeRequest += CheckAuthrozation;
 
             container.Register<IBaseRepository<tb_gather>, BaseRepository<tb_gather>>().AsSingleton();
+
+            //AllowAccessToConsumingSite(pipelines);
         }
 
         private static Response CheckAuthrozation(NancyContext ctx)
@@ -68,6 +72,13 @@ namespace G1mist.Nancy.API
             {
                 return ctx.Response;
             }
+        }
+
+        private static Response CheckRoot(NancyContext ctx)
+        {
+            var url = ctx.Request.Url;
+
+            return url.Path == "/" ? ctx.GetRedirect("~/api/") : ctx.Response;
         }
 
         private static bool CheckHeaders(NancyContext ctx, string headers)

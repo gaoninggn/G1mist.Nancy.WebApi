@@ -6,64 +6,61 @@
 // Make sure the compiler doesn't complain about missing Xml comments
 #pragma warning disable 1591
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-using ServiceStack.OrmLite;
 using ServiceStack.DataAnnotations;
-using ServiceStack.Model;
 
 namespace G1mist.Nancy.Model
 {
 
 
-	[Alias("tb_gather")]
+    [Alias("tb_gather")]
 
 
-    public partial class tb_gather 
+    public partial class tb_gather
     {
 
         [AutoIncrement]
 
-		[PrimaryKey]
-        public int id { get; set;}
+        [PrimaryKey]
+        public int id { get; set; }
+
+        [Required]
+
+        public string time { get; set; }
 
 
         [Required]
 
-        public string time { get; set;}
+        public double temperature { get; set; }
 
 
         [Required]
 
-        public double temperature { get; set;}
+        public double voltage { get; set; }
 
 
         [Required]
 
-        public double voltage { get; set;}
+        public double electrical { get; set; }
 
 
         [Required]
 
-        public double electrical { get; set;}
+        public double lumen { get; set; }
 
 
         [Required]
 
-        public double lumen { get; set;}
+        public double lightstate { get; set; }
 
 
         [Required]
 
-        public double lightstate { get; set;}
+        public double angle { get; set; }
 
 
         [Required]
 
-        public double angle { get; set;}
+        public int num { get; set; }
 
 
     }
