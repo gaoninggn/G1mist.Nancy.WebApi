@@ -27,6 +27,13 @@ namespace G1mist.Nancy.IRepository
         /// <returns></returns>
         bool Delete(T entity);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="where"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="isAesc"></param>
+        /// <returns></returns>
         T First(Expression<Func<T, bool>> where, Expression<Func<T, object>> orderBy, bool isAesc = true);
 
         long Count(Expression<Func<T, bool>> where);
