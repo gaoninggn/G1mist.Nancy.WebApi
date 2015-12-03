@@ -2,15 +2,19 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Security;
+
 using G1mist.Nancy.API.Model;
 using G1mist.Nancy.IRepository;
 using G1mist.Nancy.Model;
 using G1mist.Nancy.Repository;
+
 using Nancy;
+using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
 using Nancy.Extensions;
+using Nancy.Responses;
 using Nancy.TinyIoc;
-using Newtonsoft.Json;
+using ServiceStack;
 
 namespace G1mist.Nancy.API
 {
@@ -31,55 +35,82 @@ namespace G1mist.Nancy.API
             get { return null; }
         }
 
+        /// <summary>
+        /// 应用级别
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="pipelines"></param>
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            pipelines.BeforeRequest += CheckRoot;
-            pipelines.BeforeRequest += CheckAuthrozation;
+            pipelines.BeforeRequest += ctx =>
+            {
+                var url = ctx.Request.Url;
+
+                return url.Path == "/" ? ctx.GetRedirect("~/api/") : ctx.Response;
+            };
 
             container.Register<IBaseRepository<tb_gather>, BaseRepository<tb_gather>>().AsSingleton();
-
-            //AllowAccessToConsumingSite(pipelines);
         }
 
-        private static Response CheckAuthrozation(NancyContext ctx)
+        /// <summary>
+        /// 每一次Request将执行此函数，在此函数中校验用户的身份
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="pipelines"></param>
+        /// <param name="context"></param>
+        protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
-            var url = ctx.Request.Url;
-            var method = ctx.Request.Method;
+            pipelines.AfterRequest += AfterRequest;
 
-            if (url.Path.Contains("/gather"))
-            {
-                if (method == "POST")
+            var configuration =
+                new StatelessAuthenticationConfiguration(nancyContext =>
                 {
-                    var headers = ctx.Request.Headers.Authorization;
+                    var authorization = nancyContext.Request.Headers.Authorization;
 
-                    if (string.IsNullOrEmpty(headers))
+                    if (string.IsNullOrEmpty(authorization))
                     {
-                        return ErrorResponse(10003, "请输入验证信息");
+                        return null;
                     }
                     else
                     {
-                        var result = CheckHeaders(ctx, headers);
+                        var result = CheckHeaders(context, authorization);
 
-                        return result ? ctx.Response : ErrorResponse(10004, "验证信息不正确");
+                        if (result)
+                        {
+                            return new UserIdentify
+                            {
+                                UserName = authorization.Split(':')[1],
+                                Claims = new[]
+                                {
+                                     authorization.Split(':')[1]
+                                }
+                            };
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
-                }
-                else
-                {
-                    return ctx.Response;
-                }
-            }
-            else
-            {
-                return ctx.Response;
-            }
+                });
+
+            StatelessAuthentication.Enable(pipelines, configuration);
         }
 
-        private static Response CheckRoot(NancyContext ctx)
+        /// <summary>
+        /// 每一个Request执行完之后，将执行此函数
+        /// </summary>
+        /// <param name="ctx">NancyContext</param>
+        private static void AfterRequest(NancyContext ctx)
         {
-            var url = ctx.Request.Url;
+            if (ctx.Response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                //ctx.Response =new .WithStatusCode(HttpStatusCode.Unauthorized).WithContentType("Application/json");
 
-            return url.Path == "/" ? ctx.GetRedirect("~/api/") : ctx.Response;
+                ctx.Response = new JsonResponse(new ErrorResponseMessage { ErrorCode = 401, Message = "权限不足" }, new DefaultJsonSerializer()).WithStatusCode(HttpStatusCode.Unauthorized).WithContentType("Application/json");
+            }
         }
+
+        #region Validate Authorization Headers
 
         private static bool CheckHeaders(NancyContext ctx, string headers)
         {
@@ -152,20 +183,6 @@ namespace G1mist.Nancy.API
             return s.Length <= 0 ? "" : s[0];
         }
 
-        private static Response ErrorResponse(int errorCode, string message)
-        {
-            var errorMsg = new ErrorResponseMessage { ErrorCode = errorCode, Message = message };
-            var content = JsonConvert.SerializeObject(errorMsg);
-
-            return new Response
-            {
-                StatusCode = HttpStatusCode.OK,
-                ContentType = "aplication/json",
-                Contents =
-                    stream => { stream.Write(Encoding.UTF8.GetBytes(content), 0, Encoding.UTF8.GetBytes(content).Length); }
-            };
-        }
-
         private static bool ValidateHeaders(string appid, string content, string clientSignature)
         {
             var requestContentString = "";
@@ -218,5 +235,6 @@ namespace G1mist.Nancy.API
             }
             return hexString;
         }
+        #endregion
     }
 }

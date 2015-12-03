@@ -4,6 +4,7 @@ using G1mist.Nancy.IRepository;
 using G1mist.Nancy.Model;
 using Nancy;
 using Nancy.ModelBinding;
+using Nancy.Security;
 using Nancy.Validation;
 
 namespace G1mist.Nancy.API.Modules
@@ -13,6 +14,8 @@ namespace G1mist.Nancy.API.Modules
         public GatherModule(IBaseRepository<tb_gather> gatheRepository)
             : base("/gather")
         {
+            this.RequiresAuthentication();
+
             Post["/"] = light =>
             {
                 tb_gather gather;
