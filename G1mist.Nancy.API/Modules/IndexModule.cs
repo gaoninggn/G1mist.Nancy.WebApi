@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using G1mist.Nancy.API.Model;
 using G1mist.Nancy.API.Model.DTOs;
 using G1mist.Nancy.IRepository;
 using G1mist.Nancy.Model;
 using Nancy;
-using Newtonsoft.Json;
 
 namespace G1mist.Nancy.API.Modules
 {
@@ -22,6 +20,9 @@ namespace G1mist.Nancy.API.Modules
                 var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(5).ToList();
                 var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(5).ToList();
 
+                voltagesA.Reverse();
+                voltagesB.Reverse();
+
                 var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
                 var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
 
@@ -31,7 +32,7 @@ namespace G1mist.Nancy.API.Modules
                     new Voltage{name = "灯泡2",data = dataB}
                 };
 
-                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); ;
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); 
             };
 
             Get["/gettemperature"] = p =>
@@ -56,6 +57,9 @@ namespace G1mist.Nancy.API.Modules
                 var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(5).ToList();
                 var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(5).ToList();
 
+                voltagesA.Reverse();
+                voltagesB.Reverse();
+
                 var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.voltage }).ToList();
                 var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.voltage }).ToList();
 
@@ -65,7 +69,7 @@ namespace G1mist.Nancy.API.Modules
                     new Voltage{name = "灯泡2",data = dataB}
                 };
 
-                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); ;
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); 
             };
 
             Get["/getvoltage"] = p =>
@@ -90,6 +94,9 @@ namespace G1mist.Nancy.API.Modules
                 var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(5).ToList();
                 var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(5).ToList();
 
+                voltagesA.Reverse();
+                voltagesB.Reverse();
+
                 var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.electrical }).ToList();
                 var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.electrical }).ToList();
 
@@ -99,7 +106,7 @@ namespace G1mist.Nancy.API.Modules
                     new Voltage{name = "灯泡2",data = dataB}
                 };
 
-                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); ;
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); 
             };
 
             Get["/getelectrical"] = p =>
@@ -119,13 +126,16 @@ namespace G1mist.Nancy.API.Modules
                 return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol);
             };
 
-            Get["/lumen"] = p =>
+            Get["/efficiency"] = p =>
             {
                 var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(5).ToList();
                 var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(5).ToList();
 
-                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
-                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.temperature }).ToList();
+                voltagesA.Reverse();
+                voltagesB.Reverse();
+
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = Math.Round((v.electrical * v.voltage) / 1000, 2) }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = Math.Round((v.electrical * v.voltage) / 1000, 2) }).ToList();
 
                 var listVol = new List<Voltage>
                 {
@@ -133,16 +143,16 @@ namespace G1mist.Nancy.API.Modules
                     new Voltage{name = "灯泡2",data = dataB}
                 };
 
-                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); ;
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol); 
             };
 
-            Get["/getlumen"] = p =>
+            Get["/getefficiency"] = p =>
             {
                 var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(1).ToList();
                 var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(1).ToList();
 
-                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = v.lumen }).ToList();
-                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = v.lumen }).ToList();
+                var dataA = voltagesA.Select(v => new data { x = long.Parse(v.time), y = Math.Round((v.electrical * v.voltage) / 1000, 2) }).ToList();
+                var dataB = voltagesB.Select(v => new data { x = long.Parse(v.time), y = Math.Round((v.electrical * v.voltage) / 1000, 2) }).ToList();
 
                 var listVol = new List<Voltage>
                 {
@@ -151,6 +161,20 @@ namespace G1mist.Nancy.API.Modules
                 };
 
                 return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listVol);
+            };
+
+            Get["/lumen"] = p =>
+            {
+                var voltagesA = repository.GetList(a => a.num == 1).OrderByDescending(a => a.time).Take(1).ToList().FirstOrDefault();
+                var voltagesB = repository.GetList(a => a.num == 2).OrderByDescending(a => a.time).Take(1).ToList().FirstOrDefault();
+
+                var listLuman = new List<LumanDto>
+                {
+                    new LumanDto {Num = voltagesA.num, Luman = voltagesA.lumen},
+                    new LumanDto {Num = voltagesB.num, Luman = voltagesB.lumen}
+                };
+
+                return Negotiate.WithStatusCode(HttpStatusCode.OK).WithHeader("content-type", "application/json").WithModel(listLuman);
             };
         }
 

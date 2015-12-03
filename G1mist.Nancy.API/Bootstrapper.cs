@@ -2,19 +2,16 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Security;
-
 using G1mist.Nancy.API.Model;
 using G1mist.Nancy.IRepository;
 using G1mist.Nancy.Model;
 using G1mist.Nancy.Repository;
-
 using Nancy;
 using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
 using Nancy.Extensions;
 using Nancy.Responses;
 using Nancy.TinyIoc;
-using ServiceStack;
 
 namespace G1mist.Nancy.API
 {
@@ -46,7 +43,7 @@ namespace G1mist.Nancy.API
             {
                 var url = ctx.Request.Url;
 
-                return url.Path == "/" ? ctx.GetRedirect("~/api/") : ctx.Response;
+                return url.Path == "/" ? ctx.GetRedirect("~/show/index") : ctx.Response;
             };
 
             container.Register<IBaseRepository<tb_gather>, BaseRepository<tb_gather>>().AsSingleton();

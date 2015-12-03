@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>基于云平台的路灯管理系统</title>
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/datepicker3.css" rel="stylesheet">
+		<link href="css/styles.css" rel="stylesheet">
+
+		<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<script src="js/respond.min.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/highcharts.js"></script>
+		<script type="text/javascript" src="js/modules/exporting.js"></script>
+		<script src="js/themes/dark-unica.js" type="text/javascript"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$(function () {
+			    $('#container').highcharts({
+			        chart: {
+			            type: 'spline'
+			        },
+			        title: {
+			            text: '能效分析'
+			        },
+			        subtitle: {
+			            text: '来源: CloudCode'
+			        },
+			        xAxis: {
+			            categories: ['1月', '2月', '3月', '4月', '5月', '6月',
+			                '7月', '8月', '9月', '10月', '11月', '12月']
+			        },
+			        yAxis: {
+			            title: {
+			                text: '电功率'
+			            },
+			            labels: {
+			                formatter: function () {
+			                    return this.value + '°';
+			                }
+			            }
+			        },
+			        tooltip: {
+			            crosshairs: true,
+			            shared: true
+			        },
+			        plotOptions: {
+			            spline: {
+			                marker: {
+			                    radius: 4,
+			                    lineColor: '#666666',
+			                    lineWidth: 1
+			                }
+			            }
+			        },
+			        series: [{
+			            name: '南宁',
+			            marker: {
+			               symbol: 'diamond'
+			            },
+			            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 23, 26.5, 18.3, 13.9, 9.6]
+			
+			        },{
+			            name: '田东',
+			            marker: {
+			               symbol: 'diamond'
+			            },
+			            data: [8.0, 9.9, 10.5, 14.5, 11.2, 21.5, 27.2, 23, 24.5, 18.3, 11.9, 3.6]
+			
+			        }, {
+			            name: '桂林',
+			            marker: {
+			                symbol: 'diamond'
+			            },
+			            data: [4, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+			        }]
+			    });
+			});
+			$
+		</script>
+	</head>
+
+	<body>
+		<!--头部-->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">基于<span>云平台</span>的路灯管理系统</a>
+					<ul class="user-menu">
+						<li class="dropdown pull-right">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> 管理员 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#"><span class="glyphicon glyphicon-cog"></span> 设置</a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!--头部结束-->
+
+		<!--左边导航-->
+		<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+			<ul class="nav menu">
+				<li><a href="index.html"><span class="glyphicon glyphicon-dashboard"></span> 电路拓扑图</a></li>
+				<li><a href="Lighting.html"><span class="glyphicon glyphicon-ban-circle"></span> 远程照明控制</a></li>
+				<li><a href="Control.html"><span class="glyphicon glyphicon-adjust"></span> 转向控制</a></li>
+				<li><a href="warn.html"><span class="glyphicon glyphicon-bullhorn"></span> 光照强度</a></li>
+				<li><a href="Voltage.html"><span class="glyphicon glyphicon-th"></span> 电压分析</a></li>
+				<li><a href="Electric.html"><span class="glyphicon glyphicon-stats"></span> 电流分析</a></li>
+				<li><a href="Temperature.html"><span class="glyphicon glyphicon-list-alt"></span> 温度分析</a></li>
+				<li class="active"><a href="Efficiency.html"><span class="glyphicon glyphicon-pencil"></span> 能效分析</a></li>
+				<li><a href="Saving.html"><span class="glyphicon glyphicon-info-sign"></span> 绿色节能分析</a></li>
+			    <li><a href="login.html"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
+			</ul>
+			<div class="attribution">CopyRight 版权所有&copy; CloudCode
+				<br/>地址：广西桂林市七星区育才路15号广西师范大学
+				<br/>E-mail：gaoninggn@foxmail.cn 邮编：541004</div>
+		</div>
+		<!--左边导航结束-->
+
+		<!--右边-->
+		<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+			<div class="row">
+				<ol class="breadcrumb">
+					<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+					<li class="active">能效分析</li>
+				</ol>
+			</div>
+			<!--/.row-->
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">能效分析</h1>
+				</div>
+			</div>
+			<!--/.row-->
+
+			<div class="row">
+				<div class="col-xs-12 col-md-6 col-lg-3">
+					<div class="panel panel-blue panel-widget ">
+						<div class="row no-padding">
+							<div class="col-sm-3 col-lg-5 widget-left">
+								<em class="glyphicon glyphicon-shopping-cart glyphicon-l"></em>
+							</div>
+							<div class="col-sm-9 col-lg-7 widget-right">
+								<div class="large">120</div>
+								<div class="text-muted">New Orders</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-6 col-lg-3">
+					<div class="panel panel-orange panel-widget">
+						<div class="row no-padding">
+							<div class="col-sm-3 col-lg-5 widget-left">
+								<em class="glyphicon glyphicon-comment glyphicon-l"></em>
+							</div>
+							<div class="col-sm-9 col-lg-7 widget-right">
+								<div class="large">52</div>
+								<div class="text-muted">Comments</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-6 col-lg-3">
+					<div class="panel panel-teal panel-widget">
+						<div class="row no-padding">
+							<div class="col-sm-3 col-lg-5 widget-left">
+								<em class="glyphicon glyphicon-user glyphicon-l"></em>
+							</div>
+							<div class="col-sm-9 col-lg-7 widget-right">
+								<div class="large">24</div>
+								<div class="text-muted">New Users</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-6 col-lg-3">
+					<div class="panel panel-red panel-widget">
+						<div class="row no-padding">
+							<div class="col-sm-3 col-lg-5 widget-left">
+								<em class="glyphicon glyphicon-stats glyphicon-l"></em>
+							</div>
+							<div class="col-sm-9 col-lg-7 widget-right">
+								<div class="large">25.2k</div>
+								<div class="text-muted">Visitors</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/.row-->
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div id="container" style="min-width:400px;height:400px; margin-bottom: 10px;"></div>
+				</div>
+			</div>
+			<!--/.row-->
+
+			<div class="row">
+				<div class="col-xs-6 col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-body easypiechart-panel">
+							<h4>New Orders</h4>
+							<div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">92%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6 col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-body easypiechart-panel">
+							<h4>Comments</h4>
+							<div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">65%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6 col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-body easypiechart-panel">
+							<h4>New Users</h4>
+							<div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">56%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6 col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-body easypiechart-panel">
+							<h4>Visitors</h4>
+							<div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">27%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/.row-->
+		</div>
+		<!--右边结束-->
+	</body>
+
+</html>
