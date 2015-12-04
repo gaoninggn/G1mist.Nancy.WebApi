@@ -318,10 +318,10 @@
     <Compile Include="Model\DTOs\Voltage.cs" />
     <Compile Include="Model\UserIdentify.cs" />
     <Compile Include="Modules\GatherModule.cs" />
+    <Compile Include="Modules\ShowModule.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Model\ErrorResponseMessage.cs" />
     <Compile Include="Model\ResponseMessage.cs" />
-    <Compile Include="Modules\ShowModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
